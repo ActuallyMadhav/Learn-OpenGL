@@ -5,8 +5,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
-const unsigned int width = 800;
-const unsigned int height = 600;
+const unsigned int width = 600;
+const unsigned int height = 800;
 
 int main(){
 
