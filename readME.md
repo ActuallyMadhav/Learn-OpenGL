@@ -33,7 +33,7 @@ Run:
 ```bash
 chmod +x build.sh
 ```
-in your project root directory's terminal
+in your project root directory's terminal to give permission to run the shell script.
 
 Then run:
 ```bash
