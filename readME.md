@@ -27,3 +27,15 @@ make
 ```bash
 ./app
 ```
+
+# One Click Build:
+Run:
+```bash
+chmod +x build.sh
+```
+in your project root directory's terminal
+
+Then run:
+```bash
+./build.sh
+```
