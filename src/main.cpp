@@ -28,6 +28,12 @@ const unsigned int height = 800;
 //     "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 //     "}\n";
 
+std::string vertCode = loadShaderSource("shaders/shader.vert");
+std::string fragCode = loadShaderSource("Shaders/shader.frag");
+
+const char* vertexShaderSource = vertCode.c_str();
+const char* fragmentShaderSource = fragCode.c_str();
+
 int main(){
 
     glfwInit();
@@ -51,11 +57,6 @@ int main(){
     }
 
     // build and compile shader program
-    std::string vertCode = loadShaderSource("shaders/shader.vert");
-    std::string fragCode = loadShaderSource("Shaders/shader.frag");
-
-    const char* vertexShaderSource = vertCode.c_str();
-    const char* fragmentShaderSource = fragCode.c_str();
 
     // vertex shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
