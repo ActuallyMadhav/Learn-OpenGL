@@ -51,3 +51,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 # 7. Print status (Optional: helpful for debugging)
 message(STATUS "Opengl found: ${OPENGL_LIBRARIES}")
 message(STATUS "GLFW3 found: ${GLFW3_LIBRARIES}")
+
+# # Use this to copy the FOLDER 'shaders' into the build directory
+# file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/shaders" 
+#      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
