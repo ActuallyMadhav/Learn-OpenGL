@@ -35,7 +35,8 @@ endif()
 # 5. Define the Executable
 # We include both your main code and the glad implementation
 add_executable(${PROJECT_NAME} 
-    src/main.cpp # change according to what file should be compiled
+    # src/main.cpp # change according to what file should be compiled
+    src/shadertriangle.cpp
     src/glad.c
 )
 
