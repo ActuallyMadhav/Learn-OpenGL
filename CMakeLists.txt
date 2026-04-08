@@ -37,7 +37,7 @@ endif()
 add_executable(${PROJECT_NAME} 
     # src/main.cpp # change according to what file should be compiled
     src/shadertriangle.cpp
-    src/glad.c
+    src/glad.c # needs to be compiled always
 )
 
 # 6. Link Libraries
