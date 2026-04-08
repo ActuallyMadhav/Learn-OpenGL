@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 
+GLFWwindow* createWindow();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 std::string loadShaderSource(const char* path);
@@ -21,26 +22,9 @@ const char* vertexShaderSource = vertCode.c_str();
 const char* fragmentShaderSource = fragCode.c_str();
 
 int main(){
-
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    GLFWwindow* window = glfwCreateWindow(height, width, "physics-sim", NULL, NULL);
-    if(!window){
-        std::cout << "Failed to create window" << '\n';
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cout << "Failed to init GLAD" << '\n';
-        return -1;
-    }
+    // init window
+    GLFWwindow* window = createWindow();
+    if(!window) return -1;
 
     // build and compile shader program
 
@@ -151,6 +135,26 @@ int main(){
     
     glfwTerminate();
     return 0;
+}
+
+GLFWwindow* createWindow(){
+        // glfw initialization
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    // window creation
+    GLFWwindow* window = glfwCreateWindow(800, 600, "test window", NULL, NULL);
+    glfwMakeContextCurrent(window);
+
+    // GLAD initialzation
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        std::cout << "Failed to init GLAD" << '\n';
+    }
+
+    return window;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
