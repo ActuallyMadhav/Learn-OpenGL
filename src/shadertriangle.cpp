@@ -7,6 +7,9 @@
 GLuint width = 800, height = 600;
 GLuint vao, vbo, shader;
 
+// create window
+GLFWwindow* createWindow();
+
 // vertex shader
 static const char* vertexShaderSource = 
 "#version 330 core\n"
@@ -28,29 +31,8 @@ void addShader(GLuint program, const char* shaderCode, GLenum shaderType);
 void compileShaders();
 
 int main(){
-
-    // glfw initialization
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    // window creation
-    GLFWwindow* window = glfwCreateWindow(800, 600, "triangle", NULL, NULL);
-    if(!window){
-        std::cout << "Window creation failed" << '\n';
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    // GLAD initialzation
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cout << "Failed to init GLAD" << '\n';
-        return -1;
-    }
+    // window init
+    GLFWwindow* window = createWindow();
 
     createTriangle();
     compileShaders();
@@ -78,6 +60,30 @@ int main(){
 
     glfwTerminate();
     return 0;
+}
+
+GLFWwindow* createWindow(){
+    // glfw init
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    // create window object
+    GLFWwindow* window = glfwCreateWindow(width, height, "shader triangle", NULL, NULL);
+    if(!window){
+        std::cout << "Failed to create GLFW window" << '\n';
+        glfwTerminate();
+    }
+    glfwMakeContextCurrent(window);
+
+    // glad init
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        std::cout << "Failed to initialize GLAD" << '\n';
+    }
+
+    return window;
 }
 
 void createTriangle(){
