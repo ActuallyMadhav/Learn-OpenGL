@@ -2,31 +2,24 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string.h>
+#include <fstream>
+#include <sstream>
 
 // window dimensions + settings
 GLuint width = 800, height = 600;
 GLuint vao, vbo, shader;
 
-// create window
 GLFWwindow* createWindow();
-
-// vertex shader
-static const char* vertexShaderSource = 
-"#version 330 core\n"
-"layout (location = 0) in vec3 pos;\n"
-"void main(){\n"
-"   gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);\n"
-"}\0";
-
-// fragment shader
-static const char* fragmentShaderSource = 
-"#version 330 core\n"
-"out vec4 colour;\n"
-"void main(){\n"
-"   colour  = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n"
-"}\0";
-
 void createTriangle();
+
+// shaders source
+std::string loadShaderSource(const char* path);
+std::string vertCode = loadShaderSource("shaders/shader.vert");
+std::string fragCode = loadShaderSource("shaders/shader.frag");
+const char* vertexShaderSource = vertCode.c_str();
+const char* fragmentShaderSource = fragCode.c_str();
+
+// compile shaders
 void addShader(GLuint program, const char* shaderCode, GLenum shaderType);
 void compileShaders();
 
@@ -84,6 +77,13 @@ GLFWwindow* createWindow(){
     }
 
     return window;
+}
+
+std::string loadShaderSource(const char* path){
+    std::ifstream file(path);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }
 
 void createTriangle(){
