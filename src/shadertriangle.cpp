@@ -10,7 +10,9 @@ GLuint width = 800, height = 600;
 GLuint vao, vbo, shader;
 
 GLFWwindow* createWindow();
-void createTriangle();
+void createTriangle1();
+void createTriangle2();
+void createTriangle3();
 
 // shaders source
 std::string loadShaderSource(const char* path);
@@ -27,7 +29,7 @@ int main(){
     // window init
     GLFWwindow* window = createWindow();
 
-    createTriangle();
+    createTriangle1();
     compileShaders();
 
     // rendering loop
@@ -43,7 +45,7 @@ int main(){
         glUseProgram(shader);
         glBindVertexArray(vao);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glBindVertexArray(0);
         glUseProgram(0);
@@ -86,7 +88,7 @@ std::string loadShaderSource(const char* path){
     return buffer.str();
 }
 
-void createTriangle(){
+void createTriangle1(){
     GLfloat vertices[] = {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
@@ -108,6 +110,53 @@ void createTriangle(){
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+
+void createTriangle2(){
+    GLfloat vertices[] = {
+        -0.4f, -0.2f, 0.0f,
+        0.2f, 0.0f, 0.0f,
+        -0.2f, 0.0f, 0.0f
+    };
+
+    //create and bind vertex array
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    // create and bind vertex buffer
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void createTriangle3(){
+    GLfloat vertices[] = {
+        -0.2f, 0.0f, 0.0f,
+        0.2f, 0.0f, 0.0f,
+        0.0f, 0.4f, 0.0f
+    };
+
+    //create and bind vertex array
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    // create and bind vertex buffer
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 
 void addShader(GLuint program, const char* shaderCode, GLenum shaderType){
 
