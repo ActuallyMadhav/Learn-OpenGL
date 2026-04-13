@@ -42,3 +42,6 @@
 
 # ds store
 *.DS_Store
+
+#build
+build/

@@ -9,7 +9,7 @@
 GLuint width = 800, height = 600;
 GLuint vao, vbo, shader;
 
-GLFWwindow* createWindow();
+GLFWwindow* createWindow(GLuint width, GLuint height);
 void createTriangle1();
 void createTriangle2();
 void createTriangle3();
@@ -27,7 +27,7 @@ void compileShaders();
 
 int main(){
     // window init
-    GLFWwindow* window = createWindow();
+    GLFWwindow* window = createWindow(width, height);
 
     createTriangle1();
     compileShaders();
@@ -57,25 +57,29 @@ int main(){
     return 0;
 }
 
-GLFWwindow* createWindow(){
+GLFWwindow* createWindow(GLuint width, GLuint height){
     // glfw init
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
 
     // create window object
     GLFWwindow* window = glfwCreateWindow(width, height, "shader triangle", NULL, NULL);
     if(!window){
         std::cout << "Failed to create GLFW window" << '\n';
         glfwTerminate();
+        return nullptr;
     }
     glfwMakeContextCurrent(window);
 
     // glad init
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         std::cout << "Failed to initialize GLAD" << '\n';
+        return nullptr;
     }
 
     return window;
