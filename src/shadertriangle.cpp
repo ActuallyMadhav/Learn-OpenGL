@@ -165,14 +165,7 @@ void createTriangle3(){
 void addShader(GLuint program, const char* shaderCode, GLenum shaderType){
 
     GLuint theShader = glCreateShader(shaderType);
-
-    const GLchar* theCode[1];
-    theCode[0] = shaderCode;
-
-    GLint codeLength[1];
-    codeLength[0] = strlen(shaderCode);
-
-    glShaderSource(theShader, 1, theCode, codeLength);
+    glShaderSource(theShader, 1, &shaderCode, NULL);
     glCompileShader(theShader);
 
     GLint result = 0;
@@ -186,6 +179,7 @@ void addShader(GLuint program, const char* shaderCode, GLenum shaderType){
     }
 
     glAttachShader(program, theShader);
+    glDeleteShader(theShader);  // clean up to prevent memory leak
 }
 
 void compileShaders(){
@@ -209,6 +203,8 @@ void compileShaders(){
         std::cout << "Error linking program: " << eLog << '\n';
         return;
     }
+
+    glUseProgram(shader);
 
     // this causes an error because createTriangle() unbinds the VAO at the end, so validation fails
 
